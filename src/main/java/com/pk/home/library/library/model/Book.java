@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,7 +19,9 @@ public class Book {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
     private String title;
+    @NotNull
     private String description;
 
     @ManyToOne
