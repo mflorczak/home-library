@@ -1,33 +1,39 @@
 package com.pk.home.library.library.controller;
 
 
-import com.pk.home.library.library.mapper.BookMapper;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.pk.home.library.library.model.Book;
-import com.pk.home.library.library.model.dto.BookDto;
-import com.pk.home.library.library.service.BookServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.pk.home.library.library.repository.BookRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(path = "/books")
 public class BookController {
+    private final BookRepository bookRepository;
 
-    @Autowired
-    private BookServiceImpl bookService;
-    @Autowired
-    private BookMapper bookMapper;
-
-    @PostMapping("/book")
-    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
-        return ResponseEntity.accepted().body(bookMapper.mapToBookDto(bookService.saveBook(bookMapper.mapToBook(bookDto))));
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
-//    @PostMapping("/book")
-//    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-//        return ResponseEntity.accepted().body(bookService.saveBook(book));
-//    }
+    @GetMapping()
+    @JsonView(Book.JsonViews.Name.class)
+    List<Book> all() {
+        return bookRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @JsonView(Book.JsonViews.Get.class)
+    Book book(@PathVariable Long id) {
+        return bookRepository.getOne(id);
+    }
+
+    @PostMapping()
+    Book newBook(@RequestBody Book newBook) {
+        return bookRepository.save(newBook);
+    }
 }
+
+
+
