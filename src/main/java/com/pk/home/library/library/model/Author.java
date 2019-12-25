@@ -29,6 +29,7 @@ public class Author {
 
     @Id
     @GeneratedValue
+    @JsonView(JsonViews.Name.class)
     private Long id;
 
     @JsonView(JsonViews.Name.class)

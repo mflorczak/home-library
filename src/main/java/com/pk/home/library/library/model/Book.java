@@ -30,6 +30,7 @@ public class Book {
 
     @Id
     @GeneratedValue
+    @JsonView(JsonViews.Name.class)
     private Long id;
 
     @NotNull
