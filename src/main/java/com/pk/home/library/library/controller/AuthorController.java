@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.pk.home.library.library.model.Author;
 import com.pk.home.library.library.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,13 @@ public class AuthorController {
     }
 
     @PostMapping()
-    void addBook(@RequestBody Author newAuthor) {
-        authorService.addAuthor(newAuthor);
+    ResponseEntity<Author> addBook(@RequestBody Author newAuthor) {
+        return ResponseEntity.ok(authorService.addAuthor(newAuthor));
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    void deleteAuthor(@NotNull Author author) {
+        authorService.deleteAuthor(author);
+    }
+
 }

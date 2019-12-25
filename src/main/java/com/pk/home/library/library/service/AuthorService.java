@@ -18,8 +18,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void addAuthor(@NotNull Author author) {
-        authorRepository.save(author);
+    public Author addAuthor(@NotNull Author author) {
+        return authorRepository.save(author);
     }
 
     public void deleteAuthor(@NotNull Author author) {

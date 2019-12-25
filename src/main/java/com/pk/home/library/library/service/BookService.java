@@ -18,8 +18,8 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void addBook(@NotNull Book book) {
-        bookRepository.save(book);
+    public Book addBook(@NotNull Book book) {
+        return bookRepository.save(book);
     }
 
     public void deleteBook(@NotNull Book book) {
