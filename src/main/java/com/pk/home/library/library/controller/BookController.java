@@ -43,6 +43,14 @@ public class BookController {
     void deleteBook(@NotNull Book book) {
         bookService.deleteBook(book);
     }
+
+    @GetMapping("/search")
+    @JsonView(Book.JsonViews.Get.class)
+    public ResponseEntity<List<Book>> findByFilter(@RequestParam String title, @RequestParam String desc) {
+        return ResponseEntity.ok(bookService.findByFilter(title, desc));
+    }
+
+
 }
 
 
