@@ -51,10 +51,10 @@ public class BookService {
         CriteriaQuery<Book> cq = cb.createQuery(Book.class);
         Root<Book> bookRoot = cq.from(Book.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (title != null) {
+        if (title != null && !"".equals(title)) {
             predicates.add(cb.like(bookRoot.get("title"), "%" + title + "%"));
         }
-        if (desc != null) {
+        if (desc != null && !"".equals(desc)) {
             predicates.add(cb.like(bookRoot.get("description"), "%" + desc + "%"));
         }
         cq.where(predicates.toArray(new Predicate[0]));
