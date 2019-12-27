@@ -30,7 +30,7 @@ public class Book {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(JsonViews.Title.class)
     private Long id;
 
@@ -50,10 +50,10 @@ public class Book {
     @JsonView(JsonViews.TitleWithAuthorId.class)
     private Author author;
 
-    public Book(@NotNull String title, @NotNull String description, @NotNull Author author, @NotNull String publisher) {
-        this.title = title;
-        this.description = description;
-        this.author = author;
-        this.publisher = publisher;
-    }
+//    public Book(@NotNull String title, @NotNull String description, @NotNull Author author, @NotNull String publisher) {
+//        this.title = title;
+//        this.description = description;
+//        this.author = author;
+//        this.publisher = publisher;
+//    }
 }

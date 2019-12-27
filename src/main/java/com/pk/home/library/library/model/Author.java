@@ -18,19 +18,17 @@ public class Author {
 
     public interface JsonViews {
         interface Id {
-
         }
 
         interface Name extends Id {
         }
 
         interface NameWithBooks extends Name, Book.JsonViews.Title {
-
         }
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(JsonViews.Id.class)
     private Long id;
 
@@ -41,12 +39,6 @@ public class Author {
 
     @OneToMany(mappedBy = "author")
     @JsonView(JsonViews.NameWithBooks.class)
-    private List<Book> books;
-
-    public Author(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-        this.books = new ArrayList<>();
-    }
+    private List<Book> books = new ArrayList<>();
 
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,9 +38,9 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorService.addAuthor(newAuthor));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    void deleteAuthor(@NotNull Author author) {
-        authorService.deleteAuthor(author);
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
+        return authorService.deleteAuthor(id);
     }
 
 }
