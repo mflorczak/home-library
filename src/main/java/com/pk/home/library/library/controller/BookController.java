@@ -35,6 +35,7 @@ public class BookController {
     }
 
     @PostMapping()
+    @JsonView(Book.JsonViews.Title.class)
     ResponseEntity addBook(@RequestBody Book newBook) {
         return ResponseEntity.ok(bookService.addBook(newBook));
     }

@@ -36,6 +36,7 @@ public class AuthorController {
     }
 
     @PostMapping()
+    @JsonView(Author.JsonViews.Name.class)
     ResponseEntity<Author> addBook(@RequestBody Author newAuthor) {
         return ResponseEntity.ok(authorService.addAuthor(newAuthor));
     }
