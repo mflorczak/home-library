@@ -28,7 +28,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    @JsonView(Author.JsonViews.Get.class)
+    @JsonView(Author.JsonViews.NameWithBooks.class)
     ResponseEntity<Optional<Author>> author(@PathVariable Long id) {
         return ResponseEntity.ok(authorService.findAuthorById(id));
     }

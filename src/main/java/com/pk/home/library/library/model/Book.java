@@ -15,14 +15,18 @@ import javax.validation.constraints.NotNull;
 public class Book {
 
     public interface JsonViews {
-        interface Title extends Author.JsonViews.Id {
+        interface Title {
         }
 
-        interface Name extends Title, Author.JsonViews.Name {
+        interface TitleWithAuthorId extends Title, Author.JsonViews.Id {
         }
 
-        interface Get extends Name {
+        interface TitleWithAuthorData extends TitleWithAuthorId, Author.JsonViews.Name {
         }
+
+        interface TitleWithAuthorExtended extends TitleWithAuthorData {
+        }
+
     }
 
     @Id
@@ -35,16 +39,21 @@ public class Book {
     private String title;
 
     @NotNull
-    @JsonView(JsonViews.Get.class)
+    @JsonView(JsonViews.TitleWithAuthorData.class)
+    private String publisher;
+
+    @NotNull
+    @JsonView(JsonViews.TitleWithAuthorExtended.class)
     private String description;
 
     @ManyToOne
-    @JsonView(JsonViews.Title.class)
+    @JsonView(JsonViews.TitleWithAuthorId.class)
     private Author author;
 
-    public Book(@NotNull String title, @NotNull String description, @NotNull Author author) {
+    public Book(@NotNull String title, @NotNull String description, @NotNull Author author, @NotNull String publisher) {
         this.title = title;
         this.description = description;
         this.author = author;
+        this.publisher = publisher;
     }
 }

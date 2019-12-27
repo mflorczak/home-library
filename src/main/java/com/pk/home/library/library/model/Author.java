@@ -24,7 +24,8 @@ public class Author {
         interface Name extends Id {
         }
 
-        interface Get extends Name, Book.JsonViews.Title {
+        interface NameWithBooks extends Name, Book.JsonViews.Title {
+
         }
     }
 
@@ -39,7 +40,7 @@ public class Author {
     private String surname;
 
     @OneToMany(mappedBy = "author")
-    @JsonView(JsonViews.Get.class)
+    @JsonView(JsonViews.NameWithBooks.class)
     private List<Book> books;
 
     public Author(String name, String surname) {

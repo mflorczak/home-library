@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,23 +22,22 @@ public class BookController {
     }
 
     @GetMapping()
-    @JsonView(Book.JsonViews.Name.class)
+    @JsonView(Book.JsonViews.TitleWithAuthorData.class)
     ResponseEntity<List<Book>> findAllBooks() {
         return ResponseEntity.ok(bookService.findAllBooks());
     }
 
     @GetMapping("/{id}")
-    @JsonView(Book.JsonViews.Get.class)
+    @JsonView(Book.JsonViews.TitleWithAuthorExtended.class)
     ResponseEntity<Optional<Book>> book(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.findBookById(id));
     }
 
     @PostMapping()
-    @JsonView(Book.JsonViews.Title.class)
+    @JsonView(Book.JsonViews.TitleWithAuthorId.class)
     ResponseEntity<Book> addBook(@RequestBody Book newBook) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(newBook));
     }
-
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteBook(@PathVariable Long id) {
@@ -47,7 +45,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    @JsonView(Book.JsonViews.Get.class)
+    @JsonView(Book.JsonViews.TitleWithAuthorData.class)
     public ResponseEntity<List<Book>> findByFilter(@RequestParam(required = false) String title, @RequestParam(required = false) String desc) {
         return bookService.findByFilter(title, desc)
                 .map(ResponseEntity::ok)
