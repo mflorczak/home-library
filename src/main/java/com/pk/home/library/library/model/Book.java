@@ -39,7 +39,7 @@ public class Book {
     private String title;
 
     @NotNull
-    @JsonView(JsonViews.TitleWithAuthorData.class)
+    @JsonView(JsonViews.TitleWithAuthorExtended.class)
     private String publisher;
 
     @NotNull
