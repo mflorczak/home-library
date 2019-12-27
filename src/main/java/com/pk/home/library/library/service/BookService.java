@@ -12,9 +12,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collector;
 
 @Service
 public class BookService {
@@ -45,7 +44,7 @@ public class BookService {
     }
 
 
-    public List<Book> findByFilter(String title, String desc) {
+    public Optional<List<Book>> findByFilter(String title, String desc) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Book> cq = cb.createQuery(Book.class);
@@ -58,7 +57,7 @@ public class BookService {
             predicates.add(cb.like(bookRoot.get("description"), "%" + desc + "%"));
         }
         cq.where(predicates.toArray(new Predicate[0]));
-        return entityManager.createQuery(cq).getResultList();
+        return Optional.of(entityManager.createQuery(cq).getResultList());
 
     }
 }

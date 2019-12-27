@@ -36,8 +36,8 @@ public class BookController {
 
     @PostMapping()
     @JsonView(Book.JsonViews.Title.class)
-    ResponseEntity addBook(@RequestBody Book newBook) {
-        return ResponseEntity.ok(bookService.addBook(newBook));
+    ResponseEntity<Book> addBook(@RequestBody Book newBook) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(newBook));
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -48,10 +48,10 @@ public class BookController {
     @GetMapping("/search")
     @JsonView(Book.JsonViews.Get.class)
     public ResponseEntity<List<Book>> findByFilter(@RequestParam(required = false) String title, @RequestParam(required = false) String desc) {
-        return ResponseEntity.ok(bookService.findByFilter(title, desc));
+        return bookService.findByFilter(title, desc)
+                .map(ResponseEntity::ok)
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-
 }
 
 
