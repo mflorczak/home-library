@@ -40,9 +40,10 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(newBook));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    void deleteBook(@NotNull Book book) {
-        bookService.deleteBook(book);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        return bookService.deleteBook(id);
     }
 
     @GetMapping("/search")

@@ -3,6 +3,8 @@ package com.pk.home.library.library.service;
 import com.pk.home.library.library.model.Book;
 import com.pk.home.library.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -31,8 +33,9 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void deleteBook(@NotNull Book book) {
-        bookRepository.delete(book);
+    public ResponseEntity<Void> deleteBook(@NotNull Long bookId) {
+        bookRepository.deleteById(bookId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     public List<Book> findAllBooks() {
