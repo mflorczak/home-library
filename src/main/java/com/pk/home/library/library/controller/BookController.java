@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +56,7 @@ public class BookController {
     }
 
     @GetMapping("/download/{fileFormat}")
-    public ResponseEntity<InputStreamResource> downloadBooks(@PathVariable String fileFormat) throws JAXBException, FileNotFoundException {
+    public ResponseEntity<InputStreamResource> downloadBooks(@PathVariable String fileFormat) throws JAXBException, IOException {
         return bookService.downloadBooks(fileFormat);
     }
 }

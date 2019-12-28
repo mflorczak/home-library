@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,12 +74,13 @@ public class BookService {
         return Optional.of(entityManager.createQuery(cq).getResultList());
     }
 
-    public ResponseEntity<InputStreamResource> downloadBooks(String fileFormat) throws JAXBException, FileNotFoundException {
-        File file = new File(FILE_PATH);
+    public ResponseEntity<InputStreamResource> downloadBooks(String fileFormat) throws JAXBException, IOException {
+        File file = File.createTempFile("books", "." + fileFormat.toLowerCase());
 
         ParserFactory parserFactory = new ParserFactory();
         Parser parser = parserFactory.getParser(fileFormat);
         parser.serialize(bookRepository.findAll(), file);
+
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
