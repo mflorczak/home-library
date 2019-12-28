@@ -35,4 +35,8 @@ public class AuthorService {
     public Optional<Author> findAuthorById(@NotNull Long id) {
         return authorRepository.findById(id);
     }
+
+    public AuthorRepository getAuthorRepository() {
+        return authorRepository;
+    }
 }

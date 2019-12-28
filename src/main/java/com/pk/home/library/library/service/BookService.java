@@ -24,7 +24,6 @@ public class BookService {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
@@ -62,5 +61,9 @@ public class BookService {
         cq.where(predicates.toArray(new Predicate[0]));
         return Optional.of(entityManager.createQuery(cq).getResultList());
 
+    }
+
+    public BookRepository getBookRepository() {
+        return bookRepository;
     }
 }
