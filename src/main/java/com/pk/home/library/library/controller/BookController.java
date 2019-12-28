@@ -4,10 +4,13 @@ package com.pk.home.library.library.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.pk.home.library.library.model.Book;
 import com.pk.home.library.library.service.BookService;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +53,11 @@ public class BookController {
         return bookService.findByFilter(title, desc)
                 .map(ResponseEntity::ok)
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/download/{fileFormat}")
+    public ResponseEntity<InputStreamResource> downloadBooks(@PathVariable String fileFormat) throws JAXBException, FileNotFoundException {
+        return bookService.downloadBooks(fileFormat);
     }
 }
 

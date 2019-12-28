@@ -7,11 +7,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+@XmlRootElement(name = "book")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Book {
 
     public interface JsonViews {
@@ -32,10 +36,12 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(JsonViews.Title.class)
+    @XmlTransient
     private Long id;
 
     @NotNull
     @JsonView(JsonViews.Title.class)
+    @XmlElement(name = "title")
     private String title;
 
     @NotNull
@@ -46,14 +52,8 @@ public class Book {
     @JsonView(JsonViews.TitleWithAuthorExtended.class)
     private String description;
 
-    @ManyToOne
+    @ManyToOne()
     @JsonView(JsonViews.TitleWithAuthorId.class)
+    @XmlElement(name = "author")
     private Author author;
-
-//    public Book(@NotNull String title, @NotNull String description, @NotNull Author author, @NotNull String publisher) {
-//        this.title = title;
-//        this.description = description;
-//        this.author = author;
-//        this.publisher = publisher;
-//    }
 }

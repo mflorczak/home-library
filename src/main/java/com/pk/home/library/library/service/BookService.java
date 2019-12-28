@@ -1,9 +1,14 @@
 package com.pk.home.library.library.service;
 
 import com.pk.home.library.library.model.Book;
+import com.pk.home.library.library.parser.Parser;
+import com.pk.home.library.library.parser.ParserFactory;
 import com.pk.home.library.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +19,18 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
-import java.util.*;
-import java.util.stream.Collector;
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
     private BookRepository bookRepository;
+    private static final String FILE_PATH = "E:/temp/books.xml";
 
     @PersistenceContext
     EntityManager entityManager;
@@ -61,6 +72,19 @@ public class BookService {
         }
         cq.where(predicates.toArray(new Predicate[0]));
         return Optional.of(entityManager.createQuery(cq).getResultList());
+    }
 
+    public ResponseEntity<InputStreamResource> downloadBooks(String fileFormat) throws JAXBException, FileNotFoundException {
+        File file = new File(FILE_PATH);
+
+        ParserFactory parserFactory = new ParserFactory();
+        Parser parser = parserFactory.getParser(fileFormat);
+        parser.serialize(bookRepository.findAll(), file);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attatchment;filename=" + file.getName())
+                .contentType(MediaType.APPLICATION_XML).contentLength(file.length())
+                .body(resource);
     }
 }

@@ -7,7 +7,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+    #ddl-auto: create-drop
 datasource:
   url: jdbc:postgresql://chaos.c8mk0o4cf0ki.eu-central-1.rds.amazonaws.com:5432/postgres
   username: postgres
