@@ -49,8 +49,8 @@ public class BookController {
 
     @GetMapping("/search")
     @JsonView(Book.JsonViews.TitleWithAuthorData.class)
-    public ResponseEntity<List<Book>> findByFilter(@RequestParam(required = false) String title, @RequestParam(required = false) String desc) {
-        return bookService.findByFilter(title, desc)
+    public ResponseEntity<List<Book>> findByFilter(@RequestParam(required = false) String title, @RequestParam(required = false) String desc, @RequestParam(required = false) String authorName, @RequestParam(required = false) String publisher) {
+        return bookService.findByFilter(title, desc, authorName, publisher)
                 .map(ResponseEntity::ok)
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
