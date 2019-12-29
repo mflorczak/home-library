@@ -1,18 +1,18 @@
 package com.pk.home.library.library.model;
 
 
-import java.util.Map;
+import java.util.List;
 
 public class DifferentStatistic {
 
     private Long allBooksNumber;
-    private Map<Author, Long> booksPerAuthor;
+    private List<AuthorStatistic> booksPerAuthor;
 
     public long getAllBooksNumber() {
         return allBooksNumber;
     }
 
-    public Map<Author, Long> getBooksPerAuthor() {
+    public List<AuthorStatistic> getBooksPerAuthor() {
         return booksPerAuthor;
     }
 
@@ -24,14 +24,14 @@ public class DifferentStatistic {
     public static class DifferentStatisticBuilder {
 
         private long allBooksNumber;
-        private Map<Author, Long> booksPerAuthor;
+        private List<AuthorStatistic> booksPerAuthor;
 
         public DifferentStatisticBuilder setAllBooksNumber(Long allBooksNumber) {
             this.allBooksNumber = allBooksNumber;
             return this;
         }
 
-        public DifferentStatisticBuilder setBooksPerAuthor(Map<Author, Long> booksPerAuthor) {
+        public DifferentStatisticBuilder setBooksPerAuthor(List<AuthorStatistic> booksPerAuthor) {
             this.booksPerAuthor = booksPerAuthor;
             return this;
         }

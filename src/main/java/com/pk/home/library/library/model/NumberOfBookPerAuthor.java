@@ -22,19 +22,7 @@ public class NumberOfBookPerAuthor extends Statistic {
     public DifferentStatistic calculateStatistic() {
         return new DifferentStatistic
                 .DifferentStatisticBuilder()
-                .setBooksPerAuthor(convertToMap(authorService.getAuthorRepository().countBooksPerAuthor()))
+                .setBooksPerAuthor(authorService.getAuthorRepository().countBooksPerAuthor())
                 .build();
-    }
-
-    private Map<Author, Long> convertToMap(List<Object[]> authorWithBooksQuantity) {
-        Map<Author, Long> authorWithBooks = new HashMap<>();
-
-        for (Object[] object: authorWithBooksQuantity) {
-            Author author = new Author();
-            author.setName(object[0].toString());
-            author.setSurname(object[1].toString());
-            authorWithBooks.put(author, (long) object[2]);
-        }
-        return authorWithBooks;
     }
 }
