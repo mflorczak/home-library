@@ -25,7 +25,7 @@ public class AuthorService {
 
     public ResponseEntity<Void> deleteAuthor(@NotNull Long authorId) {
         authorRepository.deleteById(authorId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     public List<Author> findAllAuthors() {

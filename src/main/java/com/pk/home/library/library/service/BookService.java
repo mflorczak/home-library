@@ -5,10 +5,9 @@ import com.pk.home.library.library.model.Book;
 import com.pk.home.library.library.parser.Parser;
 import com.pk.home.library.library.parser.ParserFactory;
 import com.pk.home.library.library.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,24 +25,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BookService {
     private BookRepository bookRepository;
 
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
-
     public Book addBook(@NotNull Book book) {
         return bookRepository.save(book);
     }
 
-    public ResponseEntity<Void> deleteBook(@NotNull Long bookId) {
+    public void deleteBook(@NotNull Long bookId) {
         bookRepository.deleteById(bookId);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     public List<Book> findAllBooks() {
@@ -54,6 +48,13 @@ public class BookService {
         return bookRepository.findById(id);
     }
 
+    private boolean isFieldNameValid(String fieldName) {
+        return fieldName != null && !fieldName.isEmpty();
+    }
+
+    private String likePattern(String fieldName) {
+        return "%" + fieldName.toLowerCase() + "%";
+    }
 
     public Optional<List<Book>> findByFilter(String title, String desc, String name, String publisher) {
         String[] nameElements = name.split(" ");
@@ -64,24 +65,24 @@ public class BookService {
         Join<Book, Author> bookAuthorJoin = bookRoot.join("author", JoinType.INNER);
         List<Predicate> predicates = new ArrayList<>();
 
-        if (title != null && !"".equals(title)) {
-            predicates.add(cb.like(cb.lower(bookRoot.get("title")), "%" + title.toLowerCase() + "%"));
+        if (isFieldNameValid(name)) {
+            predicates.add(cb.like(cb.lower(bookRoot.get("title")), likePattern(title)));
         }
-        if (desc != null && !"".equals(desc)) {
-            predicates.add(cb.like(cb.lower(bookRoot.get("description")), "%" + desc.toLowerCase() + "%"));
+        if (isFieldNameValid(desc)) {
+            predicates.add(cb.like(cb.lower(bookRoot.get("description")), likePattern(desc)));
         }
-        if (name != null && !"".equals(name) && nameElements.length >= 2) {
-            Predicate predicate = cb.like(cb.lower(bookAuthorJoin.get("name")), "%" + nameElements[0].toLowerCase() + "%");
-            Predicate predicate1 = cb.like(cb.lower(bookAuthorJoin.get("surname")), "%" + nameElements[1].toLowerCase() + "%");
-            predicates.add(cb.and(predicate, predicate1));
+        if (isFieldNameValid(name) && nameElements.length >= 2) {
+            Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
+            Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[1]));
+            predicates.add(cb.and(namePredicate, surnamePredicate));
         }
-        if (name != null && !"".equals(name) && nameElements.length == 1) {
-            Predicate predicate = cb.like(cb.lower(bookAuthorJoin.get("name")), "%" + nameElements[0].toLowerCase() + "%");
-            Predicate predicate1 = cb.like(cb.lower(bookAuthorJoin.get("surname")), "%" + nameElements[0].toLowerCase() + "%");
-            predicates.add(cb.or(predicate, predicate1));
+        if (isFieldNameValid(name) && nameElements.length == 1) {
+            Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
+            Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[0]));
+            predicates.add(cb.or(namePredicate, surnamePredicate));
         }
-        if (publisher != null && !"".equals(publisher)) {
-            predicates.add(cb.like(cb.lower(bookRoot.get("publisher")), "%" + publisher.toLowerCase() + "%"));
+        if (isFieldNameValid(publisher)) {
+            predicates.add(cb.like(cb.lower(bookRoot.get("publisher")), likePattern(publisher)));
         }
         cq.where(predicates.toArray(new Predicate[0]));
         return Optional.of(entityManager.createQuery(cq).getResultList());

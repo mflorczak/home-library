@@ -44,7 +44,8 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        return bookService.deleteBook(id);
+        bookService.deleteBook(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/search")
