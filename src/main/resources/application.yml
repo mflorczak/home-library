@@ -1,8 +1,4 @@
 spring:
-  profiles.active: dev
----
-spring:
-  profiles: dev
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -13,6 +9,3 @@ datasource:
   username: postgres
   password: kaczor12
   driverClassName: org.postgresql.Driver
----
-spring:
-  prifiles: prod

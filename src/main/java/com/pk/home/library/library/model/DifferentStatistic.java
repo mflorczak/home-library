@@ -1,20 +1,15 @@
 package com.pk.home.library.library.model;
 
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class DifferentStatistic {
 
-    private Long allBooksNumber;
+    private long allBooksNumber;
     private List<AuthorStatistic> booksPerAuthor;
-
-    public long getAllBooksNumber() {
-        return allBooksNumber;
-    }
-
-    public List<AuthorStatistic> getBooksPerAuthor() {
-        return booksPerAuthor;
-    }
 
     private DifferentStatistic(DifferentStatisticBuilder builder) {
         allBooksNumber = builder.allBooksNumber;
@@ -26,7 +21,7 @@ public class DifferentStatistic {
         private long allBooksNumber;
         private List<AuthorStatistic> booksPerAuthor;
 
-        public DifferentStatisticBuilder setAllBooksNumber(Long allBooksNumber) {
+        public DifferentStatisticBuilder setAllBooksNumber(long allBooksNumber) {
             this.allBooksNumber = allBooksNumber;
             return this;
         }
