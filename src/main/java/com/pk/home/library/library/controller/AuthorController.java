@@ -3,6 +3,7 @@ package com.pk.home.library.library.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.pk.home.library.library.model.Author;
 import com.pk.home.library.library.service.AuthorService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/authors")
+@AllArgsConstructor
 public class AuthorController {
 
     private AuthorService authorService;
-
-    public AuthorController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
 
     @GetMapping()
     @JsonView(Author.JsonViews.Name.class)
