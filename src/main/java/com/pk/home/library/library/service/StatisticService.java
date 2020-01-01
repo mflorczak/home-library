@@ -5,18 +5,16 @@ import com.pk.home.library.library.factory.NumberOfBookFactory;
 import com.pk.home.library.library.factory.NumberOfBookPerAuthorFactory;
 import com.pk.home.library.library.factory.StatisticFactory;
 import com.pk.home.library.library.model.Statistic;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class StatisticService {
 
     private BookService bookService;
     private AuthorService authorService;
-
-    public StatisticService(BookService bookService, AuthorService authorService) {
-        this.bookService = bookService;
-        this.authorService = authorService;
-    }
 
     public Statistic getStatistic(StatisticModes statisticModes) {
         if (statisticModes.equals(StatisticModes.ALL_BOOKS))

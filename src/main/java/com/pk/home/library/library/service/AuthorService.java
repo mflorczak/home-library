@@ -2,6 +2,7 @@ package com.pk.home.library.library.service;
 
 import com.pk.home.library.library.model.Author;
 import com.pk.home.library.library.repository.AuthorRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AuthorService {
 
     private AuthorRepository authorRepository;
-
-    public AuthorService(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
 
     public Author addAuthor(@NotNull Author author) {
         return authorRepository.save(author);
