@@ -7,7 +7,9 @@ plugins {
 
 group = 'com.pk.home.library'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '10'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+war.archiveBaseName = 'home-library'
 
 configurations {
 	compileOnly {
@@ -27,6 +29,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	testCompile "org.mockito:mockito-core:2.+"
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
