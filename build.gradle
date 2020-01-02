@@ -12,8 +12,6 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 
-war.archiveBaseName = 'home-library'
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
