@@ -2,7 +2,6 @@ package com.pk.home.library.library.service;
 
 import com.pk.home.library.library.model.Author;
 import com.pk.home.library.library.repository.AuthorRepository;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class AuthorService {
-    @Getter
     private AuthorRepository authorRepository;
 
     public AuthorService(AuthorRepository authorRepository) {
