@@ -2,8 +2,6 @@ package com.pk.home.library.library.service;
 
 import com.pk.home.library.library.model.Author;
 import com.pk.home.library.library.repository.AuthorRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -23,9 +21,8 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    public ResponseEntity<Void> deleteAuthor(@NotNull Long authorId) {
+    public void deleteAuthor(@NotNull Long authorId) {
         authorRepository.deleteById(authorId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     public List<Author> findAllAuthors() {

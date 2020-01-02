@@ -1,15 +1,18 @@
 package com.pk.home.library.library.controller;
 
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.pk.home.library.library.model.Book;
 import com.pk.home.library.library.service.BookService;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +61,13 @@ public class BookController {
 
     @GetMapping("/download/{fileFormat}")
     public ResponseEntity<InputStreamResource> downloadBooks(@PathVariable String fileFormat) throws JAXBException, IOException {
-        return bookService.downloadBooks(fileFormat);
+        File file = bookService.downloadBooks(fileFormat);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attatchment;filename=" + file.getName())
+                .contentType(MediaType.APPLICATION_XML).contentLength(file.length())
+                .body(resource);
     }
 }
 
