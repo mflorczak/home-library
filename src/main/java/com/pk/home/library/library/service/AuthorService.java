@@ -21,8 +21,13 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    public void deleteAuthor(@NotNull Long authorId) {
-        authorRepository.deleteById(authorId);
+    public boolean deleteAuthor(@NotNull Long authorId) {
+        if (authorRepository.existsById(authorId)) {
+            authorRepository.deleteById(authorId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<Author> findAllAuthors() {

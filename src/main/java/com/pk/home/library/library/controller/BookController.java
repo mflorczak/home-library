@@ -46,9 +46,12 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        bookService.deleteBook(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    ResponseEntity<Boolean> deleteBook(@PathVariable Long id) {
+        if (bookService.deleteBook(id)) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @GetMapping("/search")
