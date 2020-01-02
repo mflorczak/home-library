@@ -1,21 +1,21 @@
 package com.pk.home.library.library.model;
 
 
-import com.pk.home.library.library.service.AuthorService;
-import com.pk.home.library.library.service.BookService;
+import com.pk.home.library.library.repository.AuthorRepository;
+import com.pk.home.library.library.repository.BookRepository;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class NumberOfBook extends Statistic {
 
-    private BookService bookService;
-    private AuthorService authorService;
+    private BookRepository bookRepository;
+    private AuthorRepository authorRepository;
 
     @Override
     public DifferentStatistic calculateStatistic() {
         return new DifferentStatistic
                 .DifferentStatisticBuilder()
-                .setAllBooksNumber(bookService.getBookRepository().count())
+                .setAllBooksNumber(bookRepository.count())
                 .build();
     }
 }

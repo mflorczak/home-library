@@ -6,7 +6,6 @@ import com.pk.home.library.library.parser.Parser;
 import com.pk.home.library.library.parser.ParserFactory;
 import com.pk.home.library.library.repository.BookRepository;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -23,7 +22,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class BookService {
-    @Getter
+
     private BookRepository bookRepository;
 
     @PersistenceContext
