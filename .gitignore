@@ -37,3 +37,4 @@ out/
 !/src/main/java/com/pk/home/library/library/model/dto/AuthorDto.java
 !/src/main/java/com/pk/home/library/library/model/dto/BookDto.java
 !/src/main/java/com/pk/home/library/library/parser/TestLoadBD.java
+!/src/main/java/com/pk/home/library/library/model/NumberOfBookPerAuthor.java
