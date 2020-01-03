@@ -1,25 +1,14 @@
 package com.pk.home.library.library.controller;
 
-import com.pk.home.library.library.enumtype.StatisticModes;
-import com.pk.home.library.library.factory.NumberOfBookFactory;
-import com.pk.home.library.library.factory.StatisticFactory;
 import com.pk.home.library.library.model.AuthorStatistic;
-import com.pk.home.library.library.model.DifferentStatistic;
-import com.pk.home.library.library.model.NumberOfBook;
 import com.pk.home.library.library.repository.AuthorRepository;
 import com.pk.home.library.library.repository.BookRepository;
-import com.pk.home.library.library.service.AuthorService;
-import com.pk.home.library.library.service.BookService;
 import com.pk.home.library.library.service.StatisticService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -50,18 +39,13 @@ class StatisticControllerTest {
     private StatisticService statisticService;
 
     @MockBean
-    private BookService bookService;
-    @MockBean
-    private AuthorService authorService;
-    @MockBean
     private BookRepository bookRepository;
     @MockBean
     private AuthorRepository authorRepository;
 
     @Test
     public void shouldReturnNumberOfBookInLibrary() throws Exception {
-        when(bookService.getBookRepository()).thenReturn(bookRepository);
-        when(bookService.getBookRepository().count()).thenReturn(6L);
+        when(bookRepository.count()).thenReturn(6L);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/statistics/all-book")
                 .param("mode", "ALL_BOOKS")
@@ -78,7 +62,6 @@ class StatisticControllerTest {
         List<AuthorStatistic> authorStatistics = Arrays.asList(new AuthorStatistic("Andrzej", "Sapkowski", 3),
                 new AuthorStatistic("Joanne", "Rowling", 2));
 
-        when(authorService.getAuthorRepository()).thenReturn(authorRepository);
         when(authorRepository.countBooksPerAuthor()).thenReturn(authorStatistics);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/statistics/all-book")
