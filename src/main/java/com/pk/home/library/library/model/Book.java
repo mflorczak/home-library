@@ -46,10 +46,6 @@ public class Book {
 
     @NotNull
     @JsonView(JsonViews.TitleWithAuthorExtended.class)
-    private String publisher;
-
-    @NotNull
-    @JsonView(JsonViews.TitleWithAuthorExtended.class)
     private String description;
 
     @ManyToOne()

@@ -14,3 +14,13 @@ export function removeRequest(url) {
         },
     });
 }
+
+export function postRequest(url, data) {
+    return fetch('http://127.0.0.1:8080/' + url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+}

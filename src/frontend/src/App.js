@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Notifications from 'react-notify-toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Button,
@@ -12,7 +13,7 @@ import {
 } from "react-bootstrap";
 import {getRequest} from "./SharedKernel/ApiRequest";
 import Book from "./Book";
-import NewBook from "./NewBook";
+import NewBookButton from "./NewBookButton";
 
 function App() {
     const [books, setBooks] = useState([]);
@@ -24,6 +25,14 @@ function App() {
 
         setBooks(response);
     }, []);
+
+    const refreshBooks = () => {
+        getRequest('books').then((response) => {
+            return response.json();
+        }).then((response) => {
+            setBooks(response);
+        });
+    };
 
     const renderBooks = (books) => {
         let lp = 0;
@@ -43,6 +52,7 @@ function App() {
 
     return (
         <Container>
+            <Notifications/>
             <Row>
                 <Col xl={12}>
                     <Jumbotron>
@@ -79,7 +89,7 @@ function App() {
                             <th>Tytuł</th>
                             <th>Autor</th>
                             <th>
-                                <NewBook/>
+                                <NewBookButton refreshBooks={refreshBooks}/>
                             </th>
                         </tr>
                         </thead>
