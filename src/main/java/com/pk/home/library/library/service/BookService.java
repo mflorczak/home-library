@@ -58,29 +58,34 @@ public class BookService {
     }
 
     public Optional<List<Book>> findByFilter(String title, String desc, String name, String publisher) {
-        String[] nameElements = name.split(" ");
+        String[] nameElements;
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Book> cq = cb.createQuery(Book.class);
         Root<Book> bookRoot = cq.from(Book.class);
         Join<Book, Author> bookAuthorJoin = bookRoot.join("author", JoinType.INNER);
         List<Predicate> predicates = new ArrayList<>();
 
-        if (isFieldNameValid(name)) {
+        if (isFieldNameValid(title)) {
             predicates.add(cb.like(cb.lower(bookRoot.get("title")), likePattern(title)));
         }
         if (isFieldNameValid(desc)) {
             predicates.add(cb.like(cb.lower(bookRoot.get("description")), likePattern(desc)));
         }
-        if (isFieldNameValid(name) && nameElements.length >= 2) {
-            Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
-            Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[1]));
-            predicates.add(cb.and(namePredicate, surnamePredicate));
+
+        if (isFieldNameValid(name)) {
+            nameElements = name.split(" ");
+
+            if (nameElements.length == 1) {
+                Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
+                Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[0]));
+                predicates.add(cb.or(namePredicate, surnamePredicate));
+            } else {
+                Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
+                Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[1]));
+                predicates.add(cb.and(namePredicate, surnamePredicate));
+            }
         }
-        if (isFieldNameValid(name) && nameElements.length == 1) {
-            Predicate namePredicate = cb.like(cb.lower(bookAuthorJoin.get("name")), likePattern(nameElements[0]));
-            Predicate surnamePredicate = cb.like(cb.lower(bookAuthorJoin.get("surname")), likePattern(nameElements[0]));
-            predicates.add(cb.or(namePredicate, surnamePredicate));
-        }
+
         if (isFieldNameValid(publisher)) {
             predicates.add(cb.like(cb.lower(bookRoot.get("publisher")), likePattern(publisher)));
         }
