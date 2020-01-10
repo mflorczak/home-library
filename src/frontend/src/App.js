@@ -14,6 +14,7 @@ import {
 import {getRequest} from "./SharedKernel/ApiRequest";
 import Book from "./Book";
 import NewBookButton from "./NewBookButton";
+import Search from "./Search";
 
 function App() {
     const [books, setBooks] = useState([]);
@@ -62,24 +63,7 @@ function App() {
                     <Jumbotron>
                         <h1>Witaj w domowej bibliotece!</h1><br/>
                         <p>
-                            <InputGroup className="mb-3">
-                                <FormControl
-                                    placeholder="Zacznij wpisywać"
-                                    aria-label="Wyszukaj"
-                                    aria-describedby="basic-addon2"
-                                />
-                                <InputGroup.Append>
-                                    <ButtonGroup>
-                                        <FormControl as="select">
-                                            <option selected={true} value={1}>Tytuł</option>
-                                            <option value={2}>Opis</option>
-                                            <option value={3}>Autor</option>
-                                            <option value={4}>Wydawca</option>
-                                        </FormControl>
-                                        <Button variant="success">Wyszukaj!</Button>
-                                    </ButtonGroup>
-                                </InputGroup.Append>
-                            </InputGroup>
+                            <Search setBooks={setBooks} refreshBooks={refreshBooks}/>
                         </p>
                     </Jumbotron>
                 </Col>
