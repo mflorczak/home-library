@@ -46,6 +46,7 @@ export default function NewBookButton(props) {
             return response.json();
         });
 
+        setAuthor(response[0].id);
         setAuthors(response);
     }, []);
 
