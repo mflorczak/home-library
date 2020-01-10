@@ -11,6 +11,7 @@ export default function NewBookButton(props) {
     const [author, setAuthor] = useState(0);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [publisher, setPublisher] = useState("");
 
     const handleClose = () => {
         setTitle("");
@@ -33,7 +34,7 @@ export default function NewBookButton(props) {
             return;
         }
 
-        postRequest('books', {title: title, description: description, author: {id: author}}).then((response) => {
+        postRequest('books', {title: title, description: description, publisher: publisher, author: {id: author}}).then((response) => {
             handleClose();
             notify.show("Książka została dodana!");
             props.refreshBooks();
@@ -91,6 +92,15 @@ export default function NewBookButton(props) {
                             setDescription(event.target.value);
                         }}>
                             {description}
+                        </textarea>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Wydawca</Form.Label>
+                        <textarea className="form-control" placeholder="Wpisz wydawcę" onChange={(event) => {
+                            setPublisher(event.target.value);
+                        }}>
+                            {publisher}
                         </textarea>
                     </Form.Group>
                 </Form>
