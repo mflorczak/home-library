@@ -50,6 +50,10 @@ function App() {
         })
     };
 
+    const downloadFile = (extension) => {
+        window.open("http://homelibrary-env.3wt3cbviwk.eu-central-1.elasticbeanstalk.com/books/download/" + extension, "_blank")
+    };
+
     return (
         <Container>
             <Notifications/>
@@ -89,7 +93,17 @@ function App() {
                             <th>Tytuł</th>
                             <th>Autor</th>
                             <th>
-                                <NewBookButton refreshBooks={refreshBooks}/>
+                                <ButtonGroup>
+                                    <NewBookButton refreshBooks={refreshBooks}/>
+
+                                    <Button variant={"primary"} onClick={() => {downloadFile('csv')}}>
+                                            CSV
+                                    </Button>
+
+                                    <Button variant={"primary"} onClick={() => {downloadFile('xml')}}>
+                                            XML
+                                    </Button>
+                                </ButtonGroup>
                             </th>
                         </tr>
                         </thead>

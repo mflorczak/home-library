@@ -1,5 +1,5 @@
 export function getRequest(url) {
-    return fetch('http://homelibrary-env.3wt3cbviwk.eu-central-1.elasticbeanstalk.com/' + url, {
+    return fetch('http://127.0.0.1:8080/' + url, {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -7,7 +7,7 @@ export function getRequest(url) {
 }
 
 export function removeRequest(url) {
-    return fetch('http://homelibrary-env.3wt3cbviwk.eu-central-1.elasticbeanstalk.com/' + url, {
+    return fetch('http://127.0.0.1:8080/' + url, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ export function removeRequest(url) {
 }
 
 export function postRequest(url, data) {
-    return fetch('http://homelibrary-env.3wt3cbviwk.eu-central-1.elasticbeanstalk.com/' + url, {
+    return fetch('http://127.0.0.1:8080/' + url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
