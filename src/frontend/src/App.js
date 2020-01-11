@@ -8,13 +8,14 @@ import {
     Container,
     FormControl,
     InputGroup,
-    Jumbotron,
+    Jumbotron, Nav,
     Row, Table
 } from "react-bootstrap";
 import {getRequest} from "./SharedKernel/ApiRequest";
 import Book from "./Book";
 import NewBookButton from "./NewBookButton";
 import Search from "./Search";
+import Statistics from "./Statistics";
 
 function App() {
     const [books, setBooks] = useState([]);
@@ -65,6 +66,27 @@ function App() {
                         <p>
                             <Search setBooks={setBooks} refreshBooks={refreshBooks}/>
                         </p>
+                        <p>
+                            <Nav variant="pills" defaultActiveKey="#">
+                                <Statistics/>
+
+                                <Nav.Item>
+                                    <Nav.Link onClick={() => {
+                                        downloadFile('csv')
+                                    }}>
+                                        CSV
+                                    </Nav.Link>
+                                </Nav.Item>
+
+                                <Nav.Item>
+                                    <Nav.Link onClick={() => {
+                                        downloadFile('xml')
+                                    }}>
+                                        XML
+                                    </Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </p>
                     </Jumbotron>
                 </Col>
             </Row>
@@ -77,17 +99,7 @@ function App() {
                             <th>Tytuł</th>
                             <th>Autor</th>
                             <th>
-                                <ButtonGroup>
-                                    <NewBookButton refreshBooks={refreshBooks}/>
-
-                                    <Button variant={"primary"} onClick={() => {downloadFile('csv')}}>
-                                            CSV
-                                    </Button>
-
-                                    <Button variant={"primary"} onClick={() => {downloadFile('xml')}}>
-                                            XML
-                                    </Button>
-                                </ButtonGroup>
+                                <NewBookButton refreshBooks={refreshBooks}/>
                             </th>
                         </tr>
                         </thead>

@@ -29,7 +29,7 @@ export default function NewBookButton(props) {
     };
 
     const addBook = () => {
-        if (title.length < 1 || description.length < 1) {
+        if (title.length < 1 || description.length < 1 || publisher.length < 1) {
             notify.show("Uzupełnij wszystkie pola!", "error");
             return;
         }
