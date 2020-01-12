@@ -30,8 +30,8 @@ export default function Search(props) {
 
         setSearchLoading(true);
 
-        let searchContext = getSearchContextDecoded();
-        getRequest('books/search?' + searchContext + "=" + searchValue).then((response) => {
+        let searchContextDecoded = getSearchContextDecoded();
+        getRequest('books/search?' + searchContextDecoded + "=" + searchValue).then((response) => {
             return response.json();
         }).then((books) => {
             setSearchLoading(false);
@@ -57,7 +57,7 @@ export default function Search(props) {
             <InputGroup.Append>
                 <ButtonGroup>
                     <FormControl as="select" onChange={(event) => {
-                        setSearchContext(event.target.value);
+                        setSearchContext(parseInt(event.target.value));
                     }}>
                         <option selected={true} value={1}>Tytuł</option>
                         <option value={2}>Opis</option>
