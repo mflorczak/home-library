@@ -1,18 +1,11 @@
 spring:
-  profiles.active: dev
----
-spring:
-  profiles: dev
   jpa:
     database: POSTGRESQL
     show-sql: true
-    hibernet:
-      ddl-auto: create-drop
+    hibernate:
+    #ddl-auto: create-drop
 datasource:
   url: jdbc:postgresql://chaos.c8mk0o4cf0ki.eu-central-1.rds.amazonaws.com:5432/postgres
   username: postgres
   password: kaczor12
   driverClassName: org.postgresql.Driver
----
-spring:
-  prifiles: prod
